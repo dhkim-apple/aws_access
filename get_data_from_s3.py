@@ -1,10 +1,12 @@
 import boto3
 import yaml
 from io import BytesIO
+import sys
+
 
 import pandas as pd
 
-with open('aws.yaml') as f:
+with open('/kdh/aws_access/aws.yaml') as f:
     config = yaml.safe_load(f)
 
 aws_access_key = config['config']['access_key_id']
@@ -31,3 +33,7 @@ def get_file_list(bucket_name = 'kdh', folder_name = 'folder_name'):
         return file_list
     else:
         print('No Files Found In The Folder')
+
+
+def download_data(bucket_name, s3_file_name, local_file_name):
+    s3.download_file(bucket_name, s3_file_name, local_file_name)
